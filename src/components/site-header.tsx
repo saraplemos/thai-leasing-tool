@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Phone, Search, MessageCircle, Menu, X } from "lucide-react";
+import { Phone, MessageCircle, Menu, X, FileText, Search as SearchIcon } from "lucide-react";
 import { useState } from "react";
 
 const nav = [
@@ -7,15 +7,14 @@ const nav = [
   { label: "Products", to: "/" },
   { label: "About Us", to: "/" },
   { label: "FAQs", to: "/" },
-  { label: "Contact Us", to: "/" },
-  { label: "Join Us", to: "/" },
+  { label: "Apply", to: "/apply" },
+  { label: "Check Status", to: "/status" },
 ];
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   return (
     <header className="sticky top-0 z-40 bg-background">
-      {/* top utility bar */}
       <div className="bg-primary text-primary-foreground text-xs">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-9 flex items-center justify-end gap-6">
           <div className="hidden sm:flex items-center gap-2">
@@ -32,26 +31,21 @@ export function SiteHeader() {
         </div>
       </div>
 
-      {/* main bar */}
       <div className="border-b border-border">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-6">
           <Link to="/" className="flex items-center gap-2 shrink-0">
-            <div className="flex items-center gap-2">
-              <span className="text-2xl font-black tracking-tight text-foreground">ICBC</span>
-              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground text-sm font-black">工</span>
-              <span className="hidden sm:inline text-lg font-bold text-foreground">工银泰国</span>
-              <span className="hidden md:inline text-xs text-muted-foreground">(租赁)</span>
-            </div>
+            <span className="text-2xl font-black tracking-tight text-foreground">ICBC</span>
+            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground text-sm font-black">工</span>
+            <span className="hidden sm:inline text-lg font-bold text-foreground">工银泰国</span>
+            <span className="hidden md:inline text-xs text-muted-foreground">(租赁)</span>
           </Link>
 
-          <nav className="hidden lg:flex items-center gap-8">
+          <nav className="hidden lg:flex items-center gap-6">
             {nav.map((n, i) => (
               <Link
                 key={n.label}
                 to={n.to}
-                className={`text-sm font-semibold tracking-wide uppercase transition-colors hover:text-primary ${
-                  i === 0 ? "text-primary" : "text-foreground/80"
-                }`}
+                className={`text-sm font-semibold tracking-wide uppercase transition-colors hover:text-primary ${i === 0 ? "text-primary" : "text-foreground/80"}`}
               >
                 {n.label}
               </Link>
@@ -60,14 +54,21 @@ export function SiteHeader() {
 
           <div className="flex items-center gap-3">
             <a
-              href="#"
+              href="https://line.me"
+              target="_blank"
+              rel="noreferrer"
               className="hidden md:inline-flex items-center gap-2 rounded-full bg-[oklch(0.7_0.18_150)] px-4 py-2 text-xs font-bold text-white shadow-sm hover:brightness-110 transition"
             >
-              <MessageCircle className="h-4 w-4" />
-              Chat via LINE
+              <MessageCircle className="h-4 w-4" /> Chat via LINE
             </a>
+            <Link
+              to="/apply"
+              className="hidden lg:inline-flex items-center gap-2 h-9 px-4 rounded-md bg-primary text-primary-foreground text-xs font-bold uppercase tracking-wider hover:bg-[var(--primary-dark)] transition"
+            >
+              <FileText className="h-4 w-4" /> Apply Now
+            </Link>
             <button className="hidden lg:inline-flex h-9 w-9 items-center justify-center rounded-full text-foreground/70 hover:text-primary">
-              <Search className="h-5 w-5" />
+              <SearchIcon className="h-5 w-5" />
             </button>
             <button
               onClick={() => setOpen(!open)}
@@ -92,6 +93,13 @@ export function SiteHeader() {
                   {n.label}
                 </Link>
               ))}
+              <Link
+                to="/apply"
+                className="mt-2 flex items-center justify-center gap-2 h-11 rounded-md bg-primary text-primary-foreground text-sm font-bold uppercase tracking-wider"
+                onClick={() => setOpen(false)}
+              >
+                <FileText className="h-4 w-4" /> Apply Now
+              </Link>
             </div>
           </div>
         )}
