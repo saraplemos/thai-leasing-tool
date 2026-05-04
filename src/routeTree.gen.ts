@@ -10,6 +10,9 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApplyRouteImport } from './routes/apply'
+import { Route as StatusRouteImport } from './routes/status'
+import { Route as AdminRouteImport } from './routes/admin'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -17,26 +20,56 @@ const IndexRoute = IndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 
+const ApplyRoute = ApplyRouteImport.update({
+  id: '/apply',
+  path: '/apply',
+  getParentRoute: () => rootRouteImport,
+} as any)
+
+const StatusRoute = StatusRouteImport.update({
+  id: '/status',
+  path: '/status',
+  getParentRoute: () => rootRouteImport,
+} as any)
+
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/apply': typeof ApplyRoute
+  '/status': typeof StatusRoute
+  '/admin': typeof AdminRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/apply': typeof ApplyRoute
+  '/status': typeof StatusRoute
+  '/admin': typeof AdminRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/apply': typeof ApplyRoute
+  '/status': typeof StatusRoute
+  '/admin': typeof AdminRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/apply' | '/status' | '/admin'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/apply' | '/status' | '/admin'
+  id: '__root__' | '/' | '/apply' | '/status' | '/admin'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ApplyRoute: typeof ApplyRoute
+  StatusRoute: typeof StatusRoute
+  AdminRoute: typeof AdminRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,21 +81,36 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/apply': {
+      id: '/apply'
+      path: '/apply'
+      fullPath: '/apply'
+      preLoaderRoute: typeof ApplyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/status': {
+      id: '/status'
+      path: '/status'
+      fullPath: '/status'
+      preLoaderRoute: typeof StatusRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ApplyRoute: ApplyRoute,
+  StatusRoute: StatusRoute,
+  AdminRoute: AdminRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}
