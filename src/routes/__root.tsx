@@ -1,6 +1,4 @@
-import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
-
-import appCss from "../styles.css?url";
+import { createRootRoute, Outlet, Link } from "@tanstack/react-router";
 
 function NotFoundComponent() {
   return (
@@ -25,45 +23,6 @@ function NotFoundComponent() {
 }
 
 export const Route = createRootRoute({
-  head: () => ({
-    meta: [
-      { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "ICBC (Thai) Leasing — Flexible Financing Solutions" },
-      { name: "description", content: "Auto, business, and solar financing in Thailand. Calculate your monthly payment, get fast approval, and apply with confidence." },
-      { name: "author", content: "ICBC (Thai) Leasing" },
-      { property: "og:title", content: "ICBC (Thai) Leasing — Flexible Financing Solutions" },
-      { property: "og:description", content: "Auto, business, and solar financing in Thailand. Calculate your monthly payment instantly." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
-    ],
-    links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
-    ],
-  }),
-  shellComponent: RootShell,
-  component: RootComponent,
+  component: () => <Outlet />,
   notFoundComponent: NotFoundComponent,
 });
-
-function RootShell({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="en">
-      <head>
-        <HeadContent />
-      </head>
-      <body>
-        {children}
-        <Scripts />
-      </body>
-    </html>
-  );
-}
-
-function RootComponent() {
-  return <Outlet />;
-}
